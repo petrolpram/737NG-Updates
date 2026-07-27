@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/petrolpram/737NG-Updates/main/schemas/aircraft-package-manifest.schema.json",
+  "title": "LevelUp 737NG Aircraft Package Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "productId",
+    "packageType",
+    "contentRoot",
+    "files",
+    "deletedPaths",
+    "archive"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "productId": {
+      "const": "levelup-737ng"
+    },
+    "packageType": {
+      "enum": [
+        "full",
+        "cumulativePatch"
+      ]
+    },
+    "releaseVersion": {
+      "$ref": "#/$defs/version"
+    },
+    "targetVersion": {
+      "$ref": "#/$defs/version"
+    },
+    "baselineVersion": {
+      "$ref": "#/$defs/version"
+    },
+    "baselineAliases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/version"
+      },
+      "uniqueItems": true
+    },
+    "releaseSequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "baselineRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baselineCommit": {
+      "$ref": "#/$defs/gitCommit"
+    },
+    "targetRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetCommit": {
+      "$ref": "#/$defs/gitCommit"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "contentRoot": {
+      "$ref": "#/$defs/relativePath"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/fileRecord"
+      }
+    },
+    "deletedPaths": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/relativePath"
+      },
+      "uniqueItems": true
+    },
+    "renamedPaths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "from",
+          "to"
+        ],
+        "properties": {
+          "from": {
+            "$ref": "#/$defs/relativePath"
+          },
+          "to": {
+            "$ref": "#/$defs/relativePath"
+          }
+        }
+      }
+    },
+    "archive": {
+      "$ref": "#/$defs/archiveRecord"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "packageType": {
+            "const": "full"
+          }
+        },
+        "required": [
+          "packageType"
+        ]
+      },
+      "then": {
+        "required": [
+          "releaseVersion",
+          "releaseSequence",
+          "targetRef",
+          "targetCommit",
+          "generatedAt"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "packageType": {
+            "const": "cumulativePatch"
+          }
+        },
+        "required": [
+          "packageType"
+        ]
+      },
+      "then": {
+        "required": [
+          "targetVersion",
+          "baselineVersion",
+          "baselineAliases",
+          "releaseSequence",
+          "baselineRef",
+          "baselineCommit",
+          "targetRef",
+          "targetCommit",
+          "generatedAt"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "gitCommit": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*\\\\).+$"
+    },
+    "archiveFileName": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!\\.{1,2}$)[^/\\\\:]+$"
+    },
+    "fileRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "operation",
+        "size",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/relativePath"
+        },
+        "operation": {
+          "enum": [
+            "add",
+            "replace",
+            "full"
+          ]
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "gitStatus": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "archiveRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fileName",
+        "size",
+        "sha256"
+      ],
+      "properties": {
+        "fileName": {
+          "$ref": "#/$defs/archiveFileName"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}

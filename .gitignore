@@ -1,0 +1,29 @@
+.DS_Store
+
+# Release staging must remain outside the Git history.
+artifacts/
+dist/
+out/
+
+# Explicit release assets.
+*.7z
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.gz
+*.manifest.json
+release-index.json
+SHA256SUMS.txt
+
+# Aircraft and native payloads.
+*.ac
+*.acf
+*.afl
+*.bank
+*.dll
+*.dylib
+*.obj
+*.snd
+*.so
+*.xpl
