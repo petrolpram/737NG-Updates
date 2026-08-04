@@ -1,10 +1,10 @@
 # LevelUp 737NG Updates
 
 This repository is the public release endpoint for LevelUp 737NG aircraft
-packages and update metadata. It is intentionally separate from the private
-aircraft source repository.
+packages, update metadata, and explicitly approved optional resources. It is
+intentionally separate from the private aircraft source repository.
 
-Aircraft files are published only as explicit assets on the
+Aircraft and resource files are published only as explicit assets on the
 [Releases](https://github.com/petrolpram/737NG-Updates/releases) page. They are
 not committed to the `main` branch.
 
@@ -18,12 +18,18 @@ through this stable endpoint:
 
 <https://github.com/petrolpram/737NG-Updates/releases/latest/download/release-index.json>
 
-Every production release is expected to provide:
+Every aircraft production release is expected to provide:
 
 - a full LevelUp package and its manifest;
 - a cumulative patch from the active full-package baseline and its manifest;
 - `release-index.json` for updater discovery; and
 - `SHA256SUMS.txt` for independent integrity verification.
+
+Optional resources such as paintkits use separate `resource-*` release tags.
+Each resource release contains one 7z archive, its machine-readable extraction
+manifest, and `SHA256SUMS.txt`. Resource releases must not be marked as the
+repository's latest release because the `latest` endpoint is reserved for
+aircraft update discovery.
 
 The exact format and publication rules are documented in
 [docs/RELEASE_CONTRACT.md](docs/RELEASE_CONTRACT.md) and
@@ -35,7 +41,7 @@ The Git tree contains only public documentation, schemas, and repository
 policy automation. It must not contain:
 
 - private LevelUp aircraft source;
-- raw or packaged aircraft payloads;
+- raw or packaged aircraft and resource payloads;
 - AC3D source files;
 - updater-generated manifests or checksums; or
 - copied source archives from the private repository.
@@ -46,10 +52,10 @@ automation and are not LevelUp aircraft downloads.
 
 ## Licensing
 
-This repository does not grant a separate license for LevelUp aircraft assets.
-Each published aircraft package remains subject to the copyright and license
-documents included with that package. A repository-wide license must not be
-assumed where no explicit license has been published.
+This repository does not grant a separate license for LevelUp aircraft or
+resource assets. Each published package remains subject to the copyright and
+license documents included with that package. A repository-wide license must
+not be assumed where no explicit license has been published.
 
 ## Support
 

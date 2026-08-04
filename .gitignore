@@ -1,4 +1,6 @@
 .DS_Store
+__pycache__/
+*.pyc
 
 # Release staging must remain outside the Git history.
 artifacts/

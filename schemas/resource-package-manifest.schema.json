@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/petrolpram/737NG-Updates/main/schemas/resource-package-manifest.schema.json",
+  "title": "LevelUp 737NG Resource Package Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageType",
+    "packageId",
+    "packageVersion",
+    "releaseTag",
+    "channel",
+    "repository",
+    "supportedProducts",
+    "deliveryMode",
+    "archiveRoot",
+    "targetDirectory",
+    "extractedSize",
+    "files",
+    "archive"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "packageType": {
+      "const": "resource"
+    },
+    "packageId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]+$",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "packageVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "releaseTag": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]+$",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "channel": {
+      "enum": [
+        "stable",
+        "beta"
+      ]
+    },
+    "repository": {
+      "const": "https://github.com/petrolpram/737NG-Updates"
+    },
+    "supportedProducts": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "const": "levelup-737ng"
+      }
+    },
+    "deliveryMode": {
+      "const": "extract"
+    },
+    "archiveRoot": {
+      "$ref": "#/$defs/directoryName"
+    },
+    "targetDirectory": {
+      "$ref": "#/$defs/directoryName"
+    },
+    "extractedSize": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 68719476736
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/fileRecord"
+      }
+    },
+    "archive": {
+      "$ref": "#/$defs/archiveRecord"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "directoryName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^(?!\\.{1,2}$)(?!.*[ .]$)(?!CON(?:\\.|$)|PRN(?:\\.|$)|AUX(?:\\.|$)|NUL(?:\\.|$)|COM[1-9](?:\\.|$)|LPT[1-9](?:\\.|$))[^/\\\\:<>\"|?*\\u0000]+$"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.{1,2}(?:/|$))[^\\u0000]+$"
+    },
+    "archiveFileName": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 255,
+      "pattern": "^(?!\\.{1,2}$)[^/\\\\:]+\\.7z$"
+    },
+    "fileRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "size",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/relativePath"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 68719476736
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "archiveRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fileName",
+        "size",
+        "sha256"
+      ],
+      "properties": {
+        "fileName": {
+          "$ref": "#/$defs/archiveFileName"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  }
+}
