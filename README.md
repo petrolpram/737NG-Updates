@@ -8,7 +8,41 @@ Aircraft and resource files are published only as explicit assets on the
 [Releases](https://github.com/petrolpram/737NG-Updates/releases) page. They are
 not committed to the `main` branch.
 
-## Downloads
+## Installation and updates
+
+**Use the [X-Plane 737NG Maintenance Toolkit](https://github.com/wahltho/xplane-737ng-maintenance-toolkit/releases/latest) to install and update the required LevelUp maintenance patches. The Toolkit is the only supported installation method for these patches.**
+
+The **LevelUp maintenance patches** group includes three mandatory items:
+
+- **VNAV Descent Tables**
+- **Weight & Balance (W&B)**
+- **FANS CDU**
+
+Install all three through the Toolkit as follows:
+
+1. Close X-Plane.
+2. Download and install the latest Maintenance Toolkit for your operating system
+   (version **0.13.0 or later**).
+3. Open the Toolkit and select your installed LevelUp 737NG aircraft folder.
+4. Select **LevelUp maintenance patches** and review the installation plan.
+   All three required patches are included automatically.
+5. Install the group through the Toolkit. It manages the patch downloads,
+   validation, backups and installation together.
+
+**Tablet Performance Calculator** and **AUTO JETWAY** are optional members of
+this group. They can be selected in addition to the three mandatory patches.
+
+Use the same Toolkit workflow for subsequent patch updates. After updating or
+reinstalling the aircraft, close X-Plane and use the Toolkit to check and reapply
+the maintenance group as needed before flying. Do not manually copy individual
+patch files or run standalone patch installers over a Toolkit-managed installation.
+Use the Toolkit's restore function if you need to restore its saved files.
+
+The group is controlled by the Toolkit catalog and uses each patch's existing
+release. There is no separate combined patch archive to download, and users do
+not need to collect the three patches from their individual repositories.
+
+## Release assets and updater metadata
 
 Use a published GitHub Release. Do not use the repository branch or GitHub's
 automatically generated source archives as an aircraft package.
