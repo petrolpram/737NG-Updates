@@ -68,6 +68,11 @@
       "items": {
         "$ref": "#/$defs/package"
       }
+    },
+    "baselineReleaseTag": {
+      "type": "string",
+      "pattern": "^v[^/\\\\]+$",
+      "description": "Optional older release containing the full baseline for a delta-only release. Requires Toolkit 0.13.8 or newer; nested references are not supported."
     }
   },
   "$defs": {
